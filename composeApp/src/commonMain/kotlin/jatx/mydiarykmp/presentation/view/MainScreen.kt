@@ -65,7 +65,7 @@ fun MainScreen(mainViewModel: MainViewModel = viewModel()) {
             )
             LazyColumn(
                 modifier = Modifier
-                    .height(A * 3)
+                    .height(A * 3 / 2)
             ) {
                 itemsIndexed(topEntries.mapToPairs()) { index, pair ->
                     val typeFirst = pair.first?.type ?: (2 * index + 1)
@@ -74,11 +74,11 @@ fun MainScreen(mainViewModel: MainViewModel = viewModel()) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(A)
+                            .height(A / 2)
                     ) {
                         val modifier = Modifier
                             .weight(1.0f)
-                            .height(A)
+                            .height(A / 2)
                         ItemTop(
                             modifier = modifier,
                             entry = pair.first,
@@ -103,11 +103,11 @@ fun MainScreen(mainViewModel: MainViewModel = viewModel()) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(A)
+                            .height(A / 2)
                     ) {
                         val modifier = Modifier
                             .weight(1.0f)
-                            .height(A)
+                            .height(A / 2)
                         ItemList(
                             modifier = modifier,
                             entry = pair.first,
