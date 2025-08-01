@@ -14,7 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import jatx.mydiary.kmp.consumer.EventConsumer
-import jatx.mydiary.kmp.di.AndroidInjector
+import jatx.mydiary.kmp.di.Injector
 import jatx.mydiary.kmp.presentation.main.MainScreen
 import java.util.Calendar
 
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        val injector = AndroidInjector(this)
+        val injector = Injector()
 
         setContent {
             val mainViewModel = injector.mainViewModel()

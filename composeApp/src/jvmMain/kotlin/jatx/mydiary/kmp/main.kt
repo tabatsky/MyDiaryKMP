@@ -6,11 +6,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.graphics.ExperimentalGraphicsApi
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import jatx.mydiary.kmp.di.JVMInjector
+import jatx.mydiary.kmp.di.Injector
 import jatx.mydiary.kmp.presentation.main.MainScreen
 
 fun main() = application {
-    val injector = JVMInjector()
+    val injector = Injector()
 
     Window(
         onCloseRequest = ::exitApplication,
