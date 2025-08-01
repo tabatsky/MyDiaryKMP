@@ -21,7 +21,10 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun entryDao(): EntryDao
 }
 
-expect object AppDatabaseCtor: RoomDatabaseConstructor<AppDatabase>
+@Suppress("NO_ACTUAL_FOR_EXPECT")
+expect object AppDatabaseCtor: RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
+}
 
 fun getRoomDatabase(
     builder: RoomDatabase.Builder<AppDatabase>
