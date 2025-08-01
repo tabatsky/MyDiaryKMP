@@ -2,7 +2,8 @@ package jatx.mydiary.kmp.di
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import jatx.mydiary.kmp.database.AppDatabaseCtor
+import jatx.mydiary.kmp.database.getDatabaseBuilder
+import jatx.mydiary.kmp.database.getRoomDatabase
 import jatx.mydiary.kmp.domain.usecase.DeleteAllUseCase
 import jatx.mydiary.kmp.domain.usecase.DeleteByTypeUseCase
 import jatx.mydiary.kmp.domain.usecase.DeleteUseCase
@@ -14,7 +15,7 @@ import jatx.mydiary.kmp.presentation.main.MainViewModel
 import jatx.mydiary.kmp.presentation.main.MainViewModelProviderFactory
 
 class Injector {
-    private val appDatabase = AppDatabaseCtor.initialize()
+    private val appDatabase = getRoomDatabase(getDatabaseBuilder())
     private val entryDao = appDatabase.entryDao()
 
     val deleteAllUseCase = DeleteAllUseCase(entryDao)

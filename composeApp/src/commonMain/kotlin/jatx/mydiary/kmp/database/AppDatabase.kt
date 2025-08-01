@@ -9,7 +9,6 @@ import jatx.mydiary.kmp.database.entity.EntryEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
-@ConstructedBy(AppDatabaseCtor::class)
 @Database(
     entities = [
         EntryEntity::class
@@ -17,6 +16,7 @@ import kotlinx.coroutines.IO
     version = 1,
     exportSchema = false
 )
+@ConstructedBy(AppDatabaseCtor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun entryDao(): EntryDao
 }
@@ -33,3 +33,5 @@ fun getRoomDatabase(
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()
 }
+
+expect fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase>
