@@ -56,6 +56,9 @@ class MainViewModel(
     private val _entries = MutableStateFlow(listOf<Entry>())
     val entries = _entries.asStateFlow()
 
+    private val _showDateTimeDialog = MutableStateFlow(false)
+    val showDateTimeDialog = _showDateTimeDialog.asStateFlow()
+
     private val _currentType = MutableStateFlow(-1)
     val currentType = _currentType.asStateFlow()
 
@@ -153,6 +156,10 @@ class MainViewModel(
         viewModelScope.launch {
             deleteByTypeUseCase.execute(typeToDelete.value)
         }
+    }
+
+    fun setShowDateTimeDialog(value: Boolean) {
+        _showDateTimeDialog.value = value
     }
 
     fun setEntryToDelete(entry: Entry?) {

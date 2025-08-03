@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,10 +25,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.darkokoa.datetimewheelpicker.WheelDateTimePicker
+import jatx.mydiary.kmp.consumer.EventConsumer
 import jatx.mydiary.kmp.domain.models.Entry
 import jatx.mydiary.kmp.domain.models.formatTimeList
 import jatx.mydiary.kmp.domain.models.formatTimeTop
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atTime
+import kotlinx.datetime.toInstant
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @ExperimentalGraphicsApi
 @ExperimentalFoundationApi
 @Composable
@@ -147,9 +155,64 @@ fun MainScreen(mainViewModel: MainViewModel) {
 
         DeleteDialog()
         DeleteByTypeDialog()
+        DateTimeDialog()
+        EventConsumer(mainViewModel.showDateTimePickerChannel) {
+            mainViewModel.setShowDateTimeDialog(true)
+        }
     }
 }
 
+@Composable
+private fun DateTimeDialog(mainViewModel: MainViewModel = viewModel()) {
+
+    val showDateTimeDialog by mainViewModel.showDateTimeDialog.collectAsState()
+    var time by rememberSaveable { mutableLongStateOf(0L) }
+
+    if (showDateTimeDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                mainViewModel.setShowDateTimeDialog(false)
+            },
+            title = {
+                Text("Выберите дату и время")
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        mainViewModel.setShowDateTimeDialog(false)
+                        mainViewModel.createEntry(time)
+                    },
+                ) {
+                    Text("Ок")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        mainViewModel.setShowDateTimeDialog(false)
+                    },
+                ) {
+                    Text("Отмена")
+                }
+            },
+            text = {
+                WheelDateTimePicker(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .background(Color.White)
+                ) { snappedDateTime ->
+                    val localDate = snappedDateTime.date
+                    val localTime = snappedDateTime.time
+                    val localDateTime = localDate.atTime(localTime)
+                    time = localDateTime
+                        .toInstant(TimeZone.currentSystemDefault())
+                        .toEpochMilliseconds()
+                }
+            }
+        )
+    }
+}
 
 @Composable
 private fun DeleteDialog(mainViewModel: MainViewModel = viewModel()) {

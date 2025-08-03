@@ -50,7 +50,8 @@ kotlin {
             implementation(libs.room.runtime)
             implementation("androidx.sqlite:sqlite-bundled:2.5.0-alpha01")
             implementation("androidx.sqlite:sqlite:2.5.0-alpha01")
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
+            implementation("io.github.darkokoa:datetime-wheel-picker:1.1.0-alpha03-compose1.8")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -86,6 +87,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
+    }
+    dependencies {
+        coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     }
 }
 
